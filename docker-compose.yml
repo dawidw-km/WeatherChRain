@@ -27,6 +27,18 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  cron:
+    build: .
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["sh", "/entrypoint.sh"]
+
   
 volumes:
   db_data:

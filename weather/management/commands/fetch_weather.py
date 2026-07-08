@@ -8,8 +8,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         url = 'https://api.open-meteo.com/v1/forecast?latitude=53.78&longitude=20.48&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation'
-        data = requests.get(url).json()
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+        except requests.exceptions.Timeout:
+            self.stdout.write("Error fetching data")
+            return
+
         current_data = data["current"]
+        if not current_data:
+            self.stdout.write("Error fetching data")
+            return
 
         record = WeatherData.objects.create(
             city = "Olsztyn",
