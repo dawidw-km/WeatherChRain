@@ -1,1 +1,1 @@
-1,16,31,46 * * * * python manage.py fetch_weather
+* * * * * appuser cd /app && /usr/local/bin/python manage.py fetch_weather

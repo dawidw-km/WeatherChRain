@@ -24,6 +24,7 @@ services:
       - .env
     environment:
       DB_HOST: db
+    user: appuser
     depends_on:
       db:
         condition: service_healthy
@@ -34,10 +35,11 @@ services:
       - .env
     environment:
       DB_HOST: db
+    user: root
+    command: ["sh", "/entrypoint.sh"]
     depends_on:
       db:
         condition: service_healthy
-    command: ["sh", "/entrypoint.sh"]
 
   
 volumes:
