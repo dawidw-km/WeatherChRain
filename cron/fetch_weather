@@ -1,1 +1,1 @@
-* * * * * appuser cd /app && /usr/local/bin/python manage.py fetch_weather
+1,15,31,46 * * * * appuser cd /app && /usr/local/bin/python manage.py fetch_weather

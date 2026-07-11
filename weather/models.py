@@ -31,4 +31,9 @@ class WeatherData(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.city} temp:{self.temperature}, humidity:{self.humidity}, rainfall:{self.rainfall_mm}, time:{self.created_at}"
+        return (
+            f"{self.city} temp:{self.temperature},"
+            f" humidity:{self.humidity},"
+            f" rainfall:{self.rainfall_mm},"
+            f" time:{self.created_at}"
+        )
