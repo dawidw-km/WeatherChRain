@@ -1,7 +1,7 @@
 import requests
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
-
+from decimal import Decimal
 from weather.models import WeatherData
 from django.core.management import BaseCommand
 
@@ -33,10 +33,12 @@ class Command(BaseCommand):
             self.stdout.write("Error fetching data")
             return
 
-        WeatherData.objects.create(
+        record = WeatherData(
             city = "Olsztyn",
             temperature = current_data["temperature_2m"],
             perceived_temperature = current_data["apparent_temperature"],
-            humidity = current_data["relative_humidity_2m"] / 100,
+            humidity = Decimal(str(round(current_data["relative_humidity_2m"] / 100, 2))),
             rainfall_mm = current_data["precipitation"]
         )
+        record.full_clean()
+        record.save()
