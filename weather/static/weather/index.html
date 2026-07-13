@@ -1,0 +1,57 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="light dark">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+        <title>Weather App</title>
+    </head>
+    <body>
+        <main>
+            <canvas id="Weather Chart"></canvas>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            async function getData() {
+                const url = "/api/weather/Olsztyn/";
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Response status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+
+                    const temperatures = result.map(record => record.temperature);
+                    const labels = result.map(record => record.created_at);
+                    const ctx = document.getElementById('Weather Chart');
+                
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Temperature',
+                                data: temperatures,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    })
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+            getData();
+        </script>
+
+    </body>
+</html>
