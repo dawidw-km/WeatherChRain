@@ -4,12 +4,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="color-scheme" content="light dark">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+        <link rel="stylesheet" href="styles/styles.css">
         <title>Weather App</title>
     </head>
     <body>
-        <main>
-            <canvas id="Weather Chart"></canvas>
-        </main>
+        <div class="weather-grid">
+            <div>
+                <canvas id="Temperature Chart"></canvas>
+            </div>
+            <div>
+                <canvas id="Perceived Temperature Chart"></canvas>
+            </div>
+            <div>
+                <canvas id="Rain Chart"></canvas>
+            </div>
+            <div>
+                <canvas id="Humidity Chart"></canvas>
+            </div>
+        </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -25,9 +37,12 @@
                     const result = await response.json();
 
                     const temperatures = result.map(record => record.temperature);
+                    const perceived_temps = result.map(record => record.perceived_temperature);
+                    const rainfall = result.map(record => record.rainfall_mm);
+                    const humidity = result.map(record => Number(record.humidity));
                     const labels = result.map(record => record.created_at);
-                    const ctx = document.getElementById('Weather Chart');
-                
+
+                    const ctx = document.getElementById('Temperature Chart');
                     new Chart(ctx, {
                         type: 'line',
                         data: {
@@ -45,7 +60,69 @@
                                 }
                             }
                         }
-                    })
+                    });
+
+                    const ctx2 = document.getElementById('Perceived Temperature Chart');
+                    new Chart(ctx2, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Perceived Temperature',
+                                data: perceived_temps,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+
+                    const ctx3 = document.getElementById('Rain Chart');
+                    new Chart(ctx3, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Rainfall',
+                                data: rainfall,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    const ctx4 = document.getElementById('Humidity Chart');
+                    new Chart(ctx4, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Humidity',
+                                data: humidity,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 }
