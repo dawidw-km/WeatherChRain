@@ -64,3 +64,47 @@ class Command(BaseCommand):
             "Wrocław",
             "https://api.open-meteo.com/v1/forecast?latitude=51.1079&longitude=17.0385&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
             )
+        self.create_weather_record(
+            "Poznań",
+            "https://api.open-meteo.com/v1/forecast?latitude=52.4064&longitude=16.9252&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Łódź",
+            "https://api.open-meteo.com/v1/forecast?latitude=51.7592&longitude=19.4560&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Szczecin",
+            "https://api.open-meteo.com/v1/forecast?latitude=53.4285&longitude=14.5528&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Lublin",
+            "https://api.open-meteo.com/v1/forecast?latitude=51.2465&longitude=22.5684&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Katowice",
+            "https://api.open-meteo.com/v1/forecast?latitude=50.2649&longitude=19.0238&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Białystok",
+            "https://api.open-meteo.com/v1/forecast?latitude=53.1325&longitude=23.1688&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Rzeszów",
+            "https://api.open-meteo.com/v1/forecast?latitude=50.0412&longitude=21.9991&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Kielce",
+            "https://api.open-meteo.com/v1/forecast?latitude=50.8661&longitude=20.6286&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Opole",
+            "https://api.open-meteo.com/v1/forecast?latitude=50.6751&longitude=17.9213&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Bydgoszcz",
+            "https://api.open-meteo.com/v1/forecast?latitude=53.1235&longitude=18.0084&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
+        self.create_weather_record(
+            "Gorzów Wielkopolski",
+            "https://api.open-meteo.com/v1/forecast?latitude=52.7368&longitude=15.2288&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation"
+            )
