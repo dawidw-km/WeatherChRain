@@ -2,7 +2,10 @@ from rest_framework import generics
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 from django.utils.dateparse import parse_date
-from .serializers import WeatherDataSerializer
+from .serializers import (
+    WeatherDataSerializer,
+    CitiesListSerializer
+    )
 from . models import WeatherData
 
 class CityWeatherListView(generics.ListAPIView):
@@ -23,3 +26,7 @@ class CityWeatherListView(generics.ListAPIView):
             city=city,
             created_at__date=target_date
         ).order_by('created_at')
+    
+class CitiesListView(generics.ListAPIView):
+    queryset = WeatherData.objects.order_by('city').values('city').distinct()
+    serializer_class = CitiesListSerializer

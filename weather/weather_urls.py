@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import CityWeatherListView
+from .views import (
+    CityWeatherListView,
+    CitiesListView
+    )
 
 urlpatterns = [
     path(
@@ -7,4 +10,8 @@ urlpatterns = [
         CityWeatherListView.as_view(),
         name="city-weather"
     ),
+    path(
+        "cities/",
+        CitiesListView.as_view(),
+    )
 ]
