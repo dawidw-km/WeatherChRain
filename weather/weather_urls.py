@@ -13,5 +13,6 @@ urlpatterns = [
     path(
         "cities/",
         CitiesListView.as_view(),
+        name="cities"
     )
 ]

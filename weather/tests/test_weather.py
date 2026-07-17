@@ -66,3 +66,32 @@ class WeatherDataAPITestCase(APITestCase, TestHelpers):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+    def test_get_cities(self):
+        record = self.create_record(
+            city="TestCity",
+            temperature=20,
+            perceived_temperature=15,
+            humidity=Decimal('0.6'),
+            rainfall_mm=2.0,
+            creation_date=timezone.now()
+        )
+
+        response = self.client.get(
+            reverse('cities'),
+            {},
+            format='json'
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data[0]['city'], record.city)
+
+    def test_get_cities_no_data(self):
+        response = self.client.get(
+            reverse('cities'),
+            {},
+            format="json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 0)
