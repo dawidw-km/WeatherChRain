@@ -14,3 +14,9 @@ class WeatherDataSerializer(serializers.ModelSerializer):
             "created_at"
         ]
         read_only_fields = fields
+
+class CitiesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WeatherData
+        fields = ["city"]
+        read_only_fields = fields
