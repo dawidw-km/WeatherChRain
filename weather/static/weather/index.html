@@ -25,9 +25,50 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+        <select id="citySelect">
+            <option value="">Pick City</option>
+        </select>
+
         <script>
-            async function getData() {
-                const url = "/api/weather/Olsztyn/";
+            async function fetchCities() {
+                const url = `/api/cities/`;
+
+                try {
+                    const response = await fetch(url)
+                    if (!response.ok) {
+                        throw new Error(`Response status: ${response.status}`)
+                    }
+
+                    const cities = await response.json();
+
+                    const city_list = document.getElementById('citySelect');
+
+                    cities.forEach(city => {
+                        const option = document.createElement('option')
+
+                        option.value = city.city;
+                        option.textContent = city.city;
+
+                        city_list.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error("Error: ", error);
+                }
+        }
+        fetchCities();   
+        </script>
+
+        <script> 
+            let chart_1;
+            let chart_2;
+            let chart_3;
+            let chart_4;
+            city = fetchCities()
+            get_default_city = [
+                option.textContent = city.city[0]
+            ]
+            async function getData(city) {
+                const url = `/api/weather/${city}/`;
                 try {
                     const response = await fetch(url);
                     if (!response.ok) {
@@ -35,7 +76,12 @@
                     }
 
                     const result = await response.json();
-
+                    const city_select = document.getElementById('citySelect');
+                    
+                    city_select.addEventListener('change', function() {
+                        getData(city_select.value);
+                    });
+                
                     const temperatures = result.map(record => record.temperature);
                     const perceived_temps = result.map(record => record.perceived_temperature);
                     const rainfall = result.map(record => record.rainfall_mm);
@@ -43,7 +89,10 @@
                     const labels = result.map(record => record.created_at);
 
                     const ctx = document.getElementById('Temperature Chart');
-                    new Chart(ctx, {
+                    if (chart_1) {
+                        chart_1.destroy();
+                    }
+                    chart_1 = new Chart(ctx, {
                         type: 'line',
                         data: {
                             labels: labels,
@@ -63,7 +112,10 @@
                     });
 
                     const ctx2 = document.getElementById('Perceived Temperature Chart');
-                    new Chart(ctx2, {
+                    if (chart_2) {
+                        chart_2.destroy()
+                    }
+                    chart_2 = new Chart(ctx2, {
                         type: 'line',
                         data: {
                             labels: labels,
@@ -82,9 +134,11 @@
                         }
                     });
 
-
                     const ctx3 = document.getElementById('Rain Chart');
-                    new Chart(ctx3, {
+                    if (chart_3) {
+                        chart_3.destroy();
+                    }
+                    chart_3 = new Chart(ctx3, {
                         type: 'line',
                         data: {
                             labels: labels,
@@ -104,7 +158,10 @@
                     });
 
                     const ctx4 = document.getElementById('Humidity Chart');
-                    new Chart(ctx4, {
+                    if (chart_4) {
+                        chart_4.destroy();
+                    }
+                    chart_4 = new Chart(ctx4, {
                         type: 'line',
                         data: {
                             labels: labels,
@@ -127,7 +184,7 @@
                     console.error('Error fetching data:', error);
                 }
             }
-            getData();
+            getData(city);
         </script>
 
     </body>
